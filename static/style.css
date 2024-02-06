@@ -1,0 +1,74 @@
+
+.topnav {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  background-color: #2e89ff;
+  color: #000000;
+  text-align: center;
+  padding: 20px;
+  margin: 0;
+}
+
+img {
+  width: 400px;
+  height: 300px;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+form {
+  margin-top: 20px;
+}
+
+select, input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 16px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+input[type="submit"] {
+  background-color: #4caf50;
+  color: #fff;
+  cursor: pointer;
+}
+
+input[type="submit"]:hover {
+  background-color: #45a049;
+}
+
+body {
+  display: flex;
+  flex-direction: row; /* Set the flex direction to row-reverse for a right-to-left layout */
+  justify-content: space-between; /* Distribute the forms evenly along the horizontal axis */
+  align-items: center; /* Align the forms vertically in the center */
+  width: 100%; /* Set the width of the body */
+  padding: 20px; /* Add some padding to the body */
+  box-sizing: border-box; /* Include padding in the total width of the body */
+  background-color: #f2f8fb; /* Set the background color of the body */
+}
+
+form {
+  margin-top: 60px;
+  flex: 1; /* Make the forms grow and shrink to fill the available space */
+  padding: 20px; /* Add some padding to the forms */
+  box-sizing: border-box; /* Include padding in the total width of the forms */
+  background-color: #fff; /* Set the background color of the forms */
+  border: 1px solid #ddd; /* Add a border to the forms */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a box shadow to the forms */
+}
+
+.endData {
+  flex: 2; /* Make the form with class "endData" take up 66% of the available space */
+}
+
+.uksus {
+  margin-bottom: 10px; /* Add some margin at the bottom of each "uksus" div */
+}

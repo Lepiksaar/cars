@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="static/style.css">
+    <title>Cars</title>
+</head>
+<body>
+  <h1 class="topnav">Cars website</h1>
+
+  <form action="/action" method="post">
+    <label for="manufacturer">Choose a manufacturer:</label>
+    <select name="manufacturer" id="Manufacturer">
+      <option value=""></option>
+      {{ range .search.ManuN}}      
+      <option value={{.}}>{{.}}</option>
+      {{end}}
+    </select>
+    <br>
+    
+    <label for="Country">Choose a Country:</label>
+    <select name="country" id="Country">
+      <option value=""></option>
+      {{ range .search.ManuC}}     
+      <option value={{.}}>{{.}}</option>
+      {{end}}
+    </select>
+    <br>
+
+    <label for="Category">Choose a Car Category:</label>
+    <select name="category" id="Category">
+      <option value=""></option>
+      {{ range .search.Cat}}
+      <option value="{{.}}">{{.}}</option>
+      {{end}}
+    </select>
+    <br>
+
+    <label for="Cname">Choose a Car name:</label>
+    <select name="cname" id="Cname">
+      <option value=""></option>
+      {{  range .search.ModName}}
+      <option value="{{.}}">{{.}}</option>
+      {{end}}
+    </select>
+    <br>
+
+    <label for="Cyear">Choose a Year:</label>
+    <select name="cyear" id="Cyear">
+      <option value=""></option>
+      {{ range .search.Year}}
+      <option value="{{.}}">{{.}}</option>
+      {{end}}
+    </select>
+    <br>
+
+    <label for="Engine">Choose Engine:</label>
+    <select name="engine" id="Engine">
+      <option value=""></option>
+      {{ range .search.Engine}}
+      <option value="{{.}}">{{.}}</option>
+      {{end}}
+    </select>
+    <br>
+
+    <label for="Horsepower">Choose Horsepower:</label>
+    <select name="horsepower" id="Horsepower">
+      <option value=""></option>
+      {{ range .search.Hp}}
+      <option value="{{.}}">{{.}}</option>
+      {{end}}
+    </select>
+    <br>
+
+    <label for="Transmission">Choose Transmission:</label>
+    <select name="transmission" id="Transmission">
+      <option value=""></option>
+      {{  range .search.Trans}}
+      <option value="{{.}}">{{.}}</option>
+      {{end}}
+    </select>
+    <br>
+
+    <label for="Drivetrain">Choose Drivetrain:</label>
+    <select name="drivetrain" id="Drivetrain">
+      <option value=""></option>
+      {{ range .search.Drive}}
+      <option value="{{.}}">{{.}}</option>
+      {{end}}
+    </select>
+    <br>
+  
+    <br>
+    <input type="submit" value="Search">
+  </form>
+
+  <form class="endData">
+    {{ range .car }}
+        <div class="uksus">
+            Car Name: {{ .Name }}   Make Year: {{ .Year }}
+            <br>
+            <br>
+            Engine: {{ .Specifications.Engine }}    Horsepower: {{ .Specifications.Horsepower }}
+            <br>
+            <br>
+            Transmission: {{ .Specifications.Transmission }}    Drivetrain: {{ .Specifications.Drivetrain }}
+            <br>
+            <br>
+            <img src="{{ .Image }}" alt="car picture">
+        </div>
+{{ end }}
+</form>
+</body>
+</html>
