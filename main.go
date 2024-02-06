@@ -3,7 +3,6 @@ package main
 import (
 	"cars/searchbars"
 	"cars/structs"
-	"fmt"
 	"html/template"
 	"log"
 	"net/http"
@@ -22,7 +21,7 @@ func main() {
 	// declaring all folders under api as static to load the picture
 	fileHandler = http.StripPrefix("/api/", http.FileServer(http.Dir("api")))
 	http.Handle("/api/", fileHandler)
-
+	// declaring car2 here because i can change this struct later.
 	Car2 = searchbars.ModelsElement()
 
 	log.Printf("Starting server on %s", address)
@@ -39,7 +38,6 @@ func HandleFunc(w http.ResponseWriter, r *http.Request) {
 		temp = template.Must(template.ParseFiles("index.html"))
 	}
 	searchbar := searchbars.FindSearch()
-	//car2 := searchbars.ModelsElement()
 
 	manu := map[string]interface{}{
 		"search": searchbar,
@@ -50,17 +48,30 @@ func HandleFunc(w http.ResponseWriter, r *http.Request) {
 
 func Action(w http.ResponseWriter, r *http.Request) { // here we both recieve data from server and send to it
 	log.Println("POST Input Data...")
+	var cyearInt int
+	var hpInt int
+	var err error
 
-	// FormVale gives us a "string"
-	cyearStr, err := strconv.Atoi(r.FormValue("cyear"))
-	if err != nil {
-		http.Error(w, "Invalid cyear parameter", http.StatusBadRequest)
-		return
+	// FormVale gives us a "string" so we need to convert it into a int
+	yearStr := r.FormValue("cyear")
+	if yearStr == "" {
+		cyearInt = 0
+	} else {
+		cyearInt, err = strconv.Atoi(yearStr)
+		if err != nil {
+			http.Error(w, "Invalid cyear parameter", http.StatusBadRequest)
+			return
+		}
 	}
-
-	hpStr, err := strconv.Atoi(r.FormValue("horsepower"))
-	if err != nil {
-		http.Error(w, "Invalid Hp parameter", http.StatusBadRequest)
+	hpStr := r.FormValue("horsepower")
+	if hpStr == "" {
+		hpInt = 0
+	} else {
+		hpInt, err = strconv.Atoi(hpStr)
+		if err != nil {
+			http.Error(w, "Invalid Hp parameter", http.StatusBadRequest)
+			return
+		}
 	}
 	// we load te values we recieved from the sidenavbar
 	search := structs.SbarVal2{
@@ -69,12 +80,18 @@ func Action(w http.ResponseWriter, r *http.Request) { // here we both recieve da
 		Cat:     r.FormValue("category"),
 		ModName: r.FormValue("cname"),
 		Drive:   r.FormValue("drivetrain"),
-		Year:    cyearStr,
+		Year:    cyearInt,
 		Engine:  r.FormValue("engine"),
-		Hp:      hpStr,
+		Hp:      hpInt,
 		Trans:   r.FormValue("transmission"),
 	}
+	Car2 := searchbars.FilterSearch(search, Car2)
+	searchbar := searchbars.FindSearch()
 
-	fmt.Println(search)
-	temp.Execute(w, nil)
+	manu := map[string]interface{}{
+		"search": searchbar,
+		"car":    Car2,
+	}
+	temp.Execute(w, manu)
+
 }

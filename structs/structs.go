@@ -1,5 +1,6 @@
 package structs
 
+// It whould be better to make it just one struct and turn all intigers to strings. code should have become shorter and better
 type Cat struct {
 	Id   int    `JSON:"id"`
 	Name string `JSON:"name"`

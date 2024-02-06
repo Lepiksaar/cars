@@ -83,3 +83,16 @@ func FindSearch() structs.SbarVal {
 	}
 	return s
 }
+func FilterSearch(search structs.SbarVal2, car2 []structs.Models) []structs.Models {
+	var filteredCars []structs.Models
+
+	for _, v := range car2 {
+		//fmt.Printf(" ------>%v<--------", search.Year)
+		// we compare all of the values we can directly compare against each other
+		if (v.Name == search.ModName || search.ModName == "") && (v.Specifications.Engine == search.Engine || search.Engine == "") && (v.Specifications.Transmission == search.Trans || search.Trans == "") && (v.Specifications.Drivetrain == search.Drive || search.Drive == "") && (v.Year == search.Year || search.Year == 0) && (v.Specifications.Horsepower == search.Hp || search.Hp == 0) {
+			filteredCars = append(filteredCars, v)
+		}
+	}
+
+	return filteredCars
+}
