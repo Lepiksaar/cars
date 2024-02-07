@@ -93,23 +93,38 @@
   
     <br>
     <input type="submit" value="Search">
+    <input type="reset" value="Reset">
   </form>
 
-  <form class="endData">
-    {{ range .car }}
-        <div class="uksus">
-            Car Name: {{ .Name }}   Make Year: {{ .Year }}
-            <br>
-            <br>
-            Engine: {{ .Specifications.Engine }}    Horsepower: {{ .Specifications.Horsepower }}
-            <br>
-            <br>
-            Transmission: {{ .Specifications.Transmission }}    Drivetrain: {{ .Specifications.Drivetrain }}
-            <br>
-            <br>
-            <img src="{{ .Image }}" alt="car picture">
-        </div>
-{{ end }}
-</form>
-</body>
-</html>
+  {{ range .car }}
+  <form action="/compare" method="post">
+      <div class="uksus">
+
+        Car Name: {{.Name}}
+         <input type="hidden" id="carName" name="carName" value="{{.Name}}">
+          Make Year: {{ .Year }}
+          <input type="hidden" id="carYear" name="carYear" value="{{.Year}}">
+          <br>
+          <br>
+          Engine: {{ .Specifications.Engine }}
+          <input type="hidden" id="carEngine" name="carEngine" value="{{.Specifications.Engine}}">
+          Horsepower: {{ .Specifications.Horsepower }}
+          <input type="hidden" id="carHp" name="carHp" value="{{.Specifications.Horsepower}}">
+          <br>
+          <br>
+          Transmission: {{ .Specifications.Transmission }}
+          <input type="hidden" id="carTransmission" name="carTransmission" value="{{.Specifications.Transmission}}">
+          Drivetrain: {{ .Specifications.Drivetrain }}
+          <input type="hidden" id="carDrivetrain" name="carDrivetrain" value="{{.Specifications.Drivetrain}}">
+          <br>
+          <br>
+          <img src="{{ .Image }}" alt="car picture">
+          <input type="hidden" id="carimage" name="carimage" value="{{.Image}}">
+          <br>
+          <input type="submit" value="Add to compare">
+      </div>
+  </form>
+  {{ end }}
+  
+  </body>
+  </html>
