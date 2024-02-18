@@ -7,9 +7,10 @@ type Cat struct {
 }
 
 type Manufacturers struct {
-	Id      int    `JSON:"id"`
-	Name    string `JSON:"name"`
-	Country string `JSON:"country"`
+	Id           int    `JSON:"id"`
+	Name         string `JSON:"name"`
+	Country      string `JSON:"country"`
+	FoundingYear int    `JSON:"foundingYear"`
 }
 type Models struct {
 	Id             int    `JSON:"id"`

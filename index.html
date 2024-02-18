@@ -9,6 +9,11 @@
 <body>
   <h1 class="topnav">Cars website</h1>
 
+
+  <form action="/comparepage" method="post">
+    <button type="submit">Go to Compare Page</button>
+</form>
+
   <form action="/action" method="post">
     <label for="manufacturer">Choose a manufacturer:</label>
     <select name="manufacturer" id="Manufacturer">
@@ -123,6 +128,10 @@
           <br>
           <input type="submit" value="Add to compare">
       </div>
+  </form>
+  <form action="/manufacturer" method="post">
+    <input type="hidden" id="manufacturerId" name="manufacturerId" value="{{.ManufacturerId}}">
+    <button type="submit">Manufacturer Info:</button>
   </form>
   {{ end }}
   

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comparepage</title>
+</head>
+<body>
+    <div>This is compare page</div>
+    <div>{{ range .}}
+        {{.Name}}
+        {{end}}
+    </div>
+
+    <div>{{ range .}}
+        {{.Specifications.Engine}}
+        {{end}}
+    </div>
+
+    <div>{{ range .}}
+        {{.Specifications.Horsepower}}
+        {{end}}
+    </div>
+
+    <div>{{ range .}}
+        {{.Specifications.Transmission}}
+        {{end}}
+    </div>
+
+    <div>{{ range .}}
+        {{.Specifications.Drivetrain}}
+        {{end}}
+    </div>
+
+
+    <div>{{ range .}}
+        {{.Specifications.Engine}}
+        {{end}}
+    </div>
+
+    <div>{{ range .}}
+        <img src="{{ .Image }}" alt="car picture">
+        {{end}}
+    </div>
+
+    <form action="/" method="get">
+        <button type="submit">To front page</button>
+    </form>
+</body>
+</html>

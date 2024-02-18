@@ -32,15 +32,28 @@ func main() {
 	http.HandleFunc("/", HandleFunc)
 	http.HandleFunc("/action", Action)
 	http.HandleFunc("/compare", Compare)
+	http.HandleFunc("/comparepage", Comparepage)
+	http.HandleFunc("/manufacturer", ManufactPage)
 	http.ListenAndServe(address, nil)
 
+}
+func ManufactPage(w http.ResponseWriter, r *http.Request) {
+	temp = template.Must(template.ParseFiles("manufacturer.html"))
+
+	manId := r.FormValue("manufacturerId")
+	manufacturer := searchbars.FilterManufacturer(manId) //add error check
+	fmt.Println(manufacturer)
+	temp.Execute(w, manufacturer)
+}
+func Comparepage(w http.ResponseWriter, r *http.Request) {
+	temp = template.Must(template.ParseFiles("comparepage.html"))
+
+	temp.Execute(w, CompList)
 }
 
 func HandleFunc(w http.ResponseWriter, r *http.Request) {
 	// Only parse the template once
-	if temp == nil {
-		temp = template.Must(template.ParseFiles("index.html"))
-	}
+	temp = template.Must(template.ParseFiles("index.html"))
 	searchbar := searchbars.FindSearch()
 
 	manu := map[string]interface{}{

@@ -2,6 +2,8 @@ package searchbars
 
 import (
 	"cars/structs"
+	"fmt"
+	"strconv"
 )
 
 func FilterSearch(search structs.SbarVal2, car2 []structs.Models) []structs.Models {
@@ -44,4 +46,22 @@ func FilterSearch(search structs.SbarVal2, car2 []structs.Models) []structs.Mode
 	}
 
 	return filteredCars
+}
+
+func FilterManufacturer(needInt string) structs.Manufacturers {
+	manufacturer := structs.Manufacturers{}
+	loadstruct := ManElement()
+	needInt2, err := strconv.Atoi(needInt)
+	if err != nil {
+		// Handle the error if the conversion failed
+		fmt.Println("Conversion error:", err)
+	}
+
+	for i, v := range loadstruct {
+		if v.Id == needInt2 {
+			manufacturer = loadstruct[i]
+		}
+
+	}
+	return manufacturer
 }
