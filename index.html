@@ -103,7 +103,8 @@
 
   {{ range .car }}
   <form action="/compare" method="post">
-      <div class="uksus">
+    <div class="uksus">
+      <div class="carinfo">
 
         Car Name: {{.Name}}
          <input type="hidden" id="carName" name="carName" value="{{.Name}}">
@@ -133,6 +134,7 @@
     <input type="hidden" id="manufacturerId" name="manufacturerId" value="{{.ManufacturerId}}">
     <button type="submit">Manufacturer Info:</button>
   </form>
+</div>
   {{ end }}
   
   </body>
