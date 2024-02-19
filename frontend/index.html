@@ -114,12 +114,12 @@
         {{ range .car }}
         <div class="car-container">
             <div class="car-details">
-                <p>Car Name: {{.Name}}</p>
-                <p>Make Year: {{ .Year }}</p>
-                <p>Engine: {{ .Specifications.Engine }}</p>
-                <p>Horsepower: {{ .Specifications.Horsepower }}</p>
-                <p>Transmission: {{ .Specifications.Transmission }}</p>
-                <p>Drivetrain: {{ .Specifications.Drivetrain }}</p>
+                <p><strong>Car Name:</strong> {{.Name}}</p>
+                <p><strong>Make Year:</strong> {{ .Year }}</p>
+                <p><strong>Engine:</strong> {{ .Specifications.Engine }}</p>
+                <p><strong>Horsepower:</strong> {{ .Specifications.Horsepower }}</p>
+                <p><strong>Transmission:</strong> {{ .Specifications.Transmission }}</p>
+                <p><strong>Drivetrain:</strong> {{ .Specifications.Drivetrain }}</p>
                 <img src="{{ .Image }}" alt="car picture" class="car-image">
               </div>
               

@@ -110,11 +110,6 @@ input[type="reset"]:hover {
   margin-top: 10px;
 }
 
-/* Style the manufacturer-form */
-.manufacturer-form {
-  margin-top: 20px;
-}
-
 /* Add some space between form elements */
 br {
   display: none; /* Hide <br> and use margin for spacing */
