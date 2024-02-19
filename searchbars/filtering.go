@@ -52,16 +52,29 @@ func FilterManufacturer(needInt string) structs.Manufacturers {
 	manufacturer := structs.Manufacturers{}
 	loadstruct := ManElement()
 	needInt2, err := strconv.Atoi(needInt)
+
 	if err != nil {
 		// Handle the error if the conversion failed
-		fmt.Println("Conversion error:", err)
+		fmt.Println("Error during manufacturer id conversion:", err)
 	}
 
 	for i, v := range loadstruct {
 		if v.Id == needInt2 {
 			manufacturer = loadstruct[i]
 		}
-
+		switch manufacturer.Id {
+		case 1:
+			manufacturer.Flag = "https://en.wikipedia.org/wiki/Flag_of_Japan#/media/File:Flag_of_Japan.svg"
+		case 2:
+		case 3:
+		case 4:
+		case 5:
+		case 6:
+		case 7:
+		case 8:
+		case 9:
+		case 10:
+		}
 	}
 	return manufacturer
 }

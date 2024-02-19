@@ -62,7 +62,7 @@ func main() {
 	}()
 
 	<-sigCh
-	log.Println("\nReceived interrupt signal. Gracefully shutting down...")
+	log.Println("\nReceived interrupt signal. Server shutting down...")
 
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
@@ -151,12 +151,11 @@ func Action(w http.ResponseWriter, r *http.Request) { // here we both recieve da
 }
 
 func Compare(w http.ResponseWriter, r *http.Request) {
-	// choices := []structs.SbarVal2{}
 	var cyearInt int
 	var hpInt int
 	var err error
 
-	// FormVale gives us a "string" so we need to convert it into a int
+	// FormValue gives us a "string" so we need to convert it into a int
 	yearStr := r.FormValue("carYear")
 	if yearStr == "" {
 		cyearInt = 0
