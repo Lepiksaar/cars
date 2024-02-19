@@ -7,135 +7,147 @@
     <title>Cars</title>
 </head>
 <body>
-  <h1 class="topnav">Cars website</h1>
+    <h1 class="topnav">Cars website</h1>
 
+    <div class="main-content">
+        <div class="search-forms">
+            <form action="/action" method="post">
+                <div class="form-group">
+                    <label for="Manufacturer">Choose a manufacturer:</label>
+                    <select name="manufacturer" id="Manufacturer">
+                        <option value=""></option>
+                        {{ range .search.ManuN }}
+                        <option value="{{.}}">{{.}}</option>
+                        {{ end }}
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                  <label for="Country">Choose a Country:</label>
+                  <select name="country" id="Country">
+                      <option value=""></option>
+                      {{ range .search.ManuC }}
+                      <option value="{{.}}">{{.}}</option>
+                      {{ end }}
+                  </select>
+              </div>
+      
+              <div class="form-group">
+                  <label for="Category">Choose a Car Category:</label>
+                  <select name="category" id="Category">
+                      <option value=""></option>
+                      {{ range .search.Cat }}
+                      <option value="{{.}}">{{.}}</option>
+                      {{ end }}
+                  </select>
+              </div>
+      
+              <div class="form-group">
+                  <label for="Cname">Choose a Car name:</label>
+                  <select name="cname" id="Cname">
+                      <option value=""></option>
+                      {{ range .search.ModName }}
+                      <option value="{{.}}">{{.}}</option>
+                      {{ end }}
+                  </select>
+              </div>
+      
+              <div class="form-group">
+                  <label for="Cyear">Choose a Year:</label>
+                  <select name="cyear" id="Cyear">
+                      <option value=""></option>
+                      {{ range .search.Year }}
+                      <option value="{{.}}">{{.}}</option>
+                      {{ end }}
+                  </select>
+              </div>
+              
+      
+              <div class="form-group">
+                  <label for="Engine">Choose Engine:</label>
+                  <select name="engine" id="Engine">
+                      <option value=""></option>
+                      {{ range .search.Engine }}
+                      <option value="{{.}}">{{.}}</option>
+                      {{ end }}
+                  </select>
+              </div>
+      
+              <div class="form-group">
+                  <label for="Horsepower">Choose Horsepower:</label>
+                  <select name="horsepower" id="Horsepower">
+                      <option value=""></option>
+                      {{ range .search.Hp }}
+                      <option value="{{.}}">{{.}}</option>
+                      {{ end }}
+                  </select>
+              </div>
+      
+              <div class="form-group">
+                  <label for="Transmission">Choose Transmission:</label>
+                  <select name="transmission" id="Transmission">
+                      <option value=""></option>
+                      {{ range .search.Trans }}
+                      <option value="{{.}}">{{.}}</option>
+                      {{ end }}
+                  </select>
+              </div>
+      
+              <div class="form-group">
+                  <label for="Drivetrain">Choose Drivetrain:</label>
+                  <select name="drivetrain" id="Drivetrain">
+                      <option value=""></option>
+                      {{ range .search.Drive }}
+                      <option value="{{.}}">{{.}}</option>
+                      {{ end }}
+                  </select>
+              </div>
 
-  <form action="/comparepage" method="post">
-    <button type="submit">Go to Compare Page</button>
-</form>
+              <div class="form-actions">
+                <input type="submit" value="Search">
+                <input type="reset" value="Reset">
+            </div>
+        </form>
+    </div>
 
-  <form action="/action" method="post">
-    <label for="manufacturer">Choose a manufacturer:</label>
-    <select name="manufacturer" id="Manufacturer">
-      <option value=""></option>
-      {{ range .search.ManuN}}      
-      <option value={{.}}>{{.}}</option>
-      {{end}}
-    </select>
-    <br>
-    
-    <label for="Country">Choose a Country:</label>
-    <select name="country" id="Country">
-      <option value=""></option>
-      {{ range .search.ManuC}}     
-      <option value={{.}}>{{.}}</option>
-      {{end}}
-    </select>
-    <br>
+    <div class="car-display">
+        {{ range .car }}
+        <div class="car-container">
+            <div class="car-details">
+                <p>Car Name: {{.Name}}</p>
+                <p>Make Year: {{ .Year }}</p>
+                <p>Engine: {{ .Specifications.Engine }}</p>
+                <p>Horsepower: {{ .Specifications.Horsepower }}</p>
+                <p>Transmission: {{ .Specifications.Transmission }}</p>
+                <p>Drivetrain: {{ .Specifications.Drivetrain }}</p>
+                <img src="{{ .Image }}" alt="car picture" class="car-image">
+              </div>
+              
+              <div class="button-group">
+              <form action="/compare" method="put" class="car-form">
+                <input type="hidden" name="carName" value="{{.Name}}">
+                <input type="hidden" name="carYear" value="{{.Year}}">
+                <input type="hidden" name="carimage" value="{{.Image}}">
+                <input type="hidden" name="carEngine" value="{{.Specifications.Engine}}">
+                <input type="hidden" name="carHp" value="{{.Specifications.Horsepower}}">
+                <input type="hidden" name="carTransmission" value="{{.Specifications.Transmission}}">
+                <input type="hidden" name="carDrivetrain" value="{{.Specifications.Drivetrain}}">
+                  <input type="submit" value="Add to compare">
+                </form>
 
-    <label for="Category">Choose a Car Category:</label>
-    <select name="category" id="Category">
-      <option value=""></option>
-      {{ range .search.Cat}}
-      <option value="{{.}}">{{.}}</option>
-      {{end}}
-    </select>
-    <br>
+                <form action="/manufacturer" method="post" class="manufacturer-form">
+                  <input type="hidden" name="manufacturerId" value="{{.ManufacturerId}}">
+                  <button type="submit">Manufacturer Info</button>
+                </form>
 
-    <label for="Cname">Choose a Car name:</label>
-    <select name="cname" id="Cname">
-      <option value=""></option>
-      {{  range .search.ModName}}
-      <option value="{{.}}">{{.}}</option>
-      {{end}}
-    </select>
-    <br>
+                <form action="/comparepage" method="post">
+                  <button type="submit">Go to Compare Page</button>
+                </form>
 
-    <label for="Cyear">Choose a Year:</label>
-    <select name="cyear" id="Cyear">
-      <option value=""></option>
-      {{ range .search.Year}}
-      <option value="{{.}}">{{.}}</option>
-      {{end}}
-    </select>
-    <br>
-
-    <label for="Engine">Choose Engine:</label>
-    <select name="engine" id="Engine">
-      <option value=""></option>
-      {{ range .search.Engine}}
-      <option value="{{.}}">{{.}}</option>
-      {{end}}
-    </select>
-    <br>
-
-    <label for="Horsepower">Choose Horsepower:</label>
-    <select name="horsepower" id="Horsepower">
-      <option value=""></option>
-      {{ range .search.Hp}}
-      <option value="{{.}}">{{.}}</option>
-      {{end}}
-    </select>
-    <br>
-
-    <label for="Transmission">Choose Transmission:</label>
-    <select name="transmission" id="Transmission">
-      <option value=""></option>
-      {{  range .search.Trans}}
-      <option value="{{.}}">{{.}}</option>
-      {{end}}
-    </select>
-    <br>
-
-    <label for="Drivetrain">Choose Drivetrain:</label>
-    <select name="drivetrain" id="Drivetrain">
-      <option value=""></option>
-      {{ range .search.Drive}}
-      <option value="{{.}}">{{.}}</option>
-      {{end}}
-    </select>
-    <br>
-  
-    <br>
-    <input type="submit" value="Search">
-    <input type="reset" value="Reset">
-  </form>
-
-  {{ range .car }}
-  <form action="/compare" method="put">
-    <div class="uksus">
-      <div class="carinfo">
-
-        Car Name: {{.Name}}
-         <input type="hidden" id="carName" name="carName" value="{{.Name}}">
-          Make Year: {{ .Year }}
-          <input type="hidden" id="carYear" name="carYear" value="{{.Year}}">
-          <br>
-          <br>
-          Engine: {{ .Specifications.Engine }}
-          <input type="hidden" id="carEngine" name="carEngine" value="{{.Specifications.Engine}}">
-          Horsepower: {{ .Specifications.Horsepower }}
-          <input type="hidden" id="carHp" name="carHp" value="{{.Specifications.Horsepower}}">
-          <br>
-          <br>
-          Transmission: {{ .Specifications.Transmission }}
-          <input type="hidden" id="carTransmission" name="carTransmission" value="{{.Specifications.Transmission}}">
-          Drivetrain: {{ .Specifications.Drivetrain }}
-          <input type="hidden" id="carDrivetrain" name="carDrivetrain" value="{{.Specifications.Drivetrain}}">
-          <br>
-          <br>
-          <img src="{{ .Image }}" alt="car picture">
-          <input type="hidden" id="carimage" name="carimage" value="{{.Image}}">
-          <br>
-          <input type="submit" value="Add to compare">
+            </div>
+          </div>
+          {{ end }}
+        </div>
       </div>
-  </form>
-  <form action="/manufacturer" method="post">
-    <input type="hidden" id="manufacturerId" name="manufacturerId" value="{{.ManufacturerId}}">
-    <button type="submit">Manufacturer Info:</button>
-  </form>
-</div>
-  {{ end }}
-  
-  </body>
-  </html>
+    </body>
+</html>
