@@ -1,0 +1,78 @@
+/* compare.css */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f7f7f7;
+    margin: 0;
+    padding: 0;
+    height: 100vh; /* Full viewport height */
+    display: flex;
+    flex-direction: column;
+}
+
+.compare-container {
+    display: flex;
+    flex-grow: 1; /* Allow container to fill the remaining height */
+    overflow-x: auto; /* Horizontal scroll for inner content */
+}
+
+.specs-description {
+    flex: 0 0 150px; /* Fixed width for the description column */
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    text-transform: uppercase;
+    line-height: 2.5;
+    background-color: #f0f0f0; /* Grey background */
+}
+
+.specs-container {
+    display: flex;
+    overflow-x: auto; /* Enable horizontal scrolling */
+    flex-grow: 1; /* Fill remaining width */
+}
+
+.specs {
+    min-width: 200px;
+    border-left: 1px solid #ddd;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    text-align: center;
+    background-color: #fff5e6; /* Light orange background */
+}
+
+.specs > div {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    background-color: #f0f0f0; /* Grey background */
+}
+
+.specs > div:nth-child(odd) {
+    background-color: #fff5e6; /* Light orange background */
+}
+
+.specs img {
+    max-width: 400px; /* Full width of the container */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 5px;
+}
+
+.return-form {
+    padding: 20px;
+    background-color: #f7f7f7; /* Same as body background for consistency */
+    text-align: center;
+}
+
+.return-form button {
+    background-color: #5cb85c;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.return-form button:hover {
+    background-color: #4cae4c;
+}

@@ -11,9 +11,8 @@ type Manufacturers struct {
 	Name         string `JSON:"name"`
 	Country      string `JSON:"country"`
 	FoundingYear int    `JSON:"foundingYear"`
-	//
-	Flag         string
-	Headquarters string
+	//added for manufacturers page
+	Info string
 }
 type Models struct {
 	Id             int    `JSON:"id"`

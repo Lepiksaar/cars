@@ -62,19 +62,29 @@ func FilterManufacturer(needInt string) structs.Manufacturers {
 		if v.Id == needInt2 {
 			manufacturer = loadstruct[i]
 		}
-		switch manufacturer.Id {
-		case 1:
-			manufacturer.Flag = "https://en.wikipedia.org/wiki/Flag_of_Japan#/media/File:Flag_of_Japan.svg"
-		case 2:
-		case 3:
-		case 4:
-		case 5:
-		case 6:
-		case 7:
-		case 8:
-		case 9:
-		case 10:
-		}
+	}
+	// we dont need it, but why not :)
+	switch manufacturer.Id {
+	case 1:
+		manufacturer.Info = "https://en.wikipedia.org/wiki/Toyota"
+	case 2:
+		manufacturer.Info = "https://en.wikipedia.org/wiki/Honda"
+	case 3:
+		manufacturer.Info = "https://en.wikipedia.org/wiki/BMW"
+	case 4:
+		manufacturer.Info = "https://en.wikipedia.org/wiki/Audi"
+	case 5:
+		manufacturer.Info = "https://en.wikipedia.org/wiki/Mercedes-Benz"
+	case 6:
+		manufacturer.Info = "https://en.wikipedia.org/wiki/Ford"
+	case 7:
+		manufacturer.Info = "https://en.wikipedia.org/wiki/Chevrolet"
+	case 8:
+		manufacturer.Info = "https://en.wikipedia.org/wiki/Hyundai"
+	case 9:
+		manufacturer.Info = "https://en.wikipedia.org/wiki/Lexus"
+	case 10:
+		manufacturer.Info = "https://en.wikipedia.org/wiki/Nissan"
 	}
 	return manufacturer
 }

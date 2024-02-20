@@ -1,0 +1,60 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f7f7f7;
+    color: #333;
+    line-height: 1.6;
+    padding: 20px;
+}
+
+/* Main container styling */
+div {
+    background: #ffffff;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Manufacturer details styling */
+div > div {
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+/* Object (iframe) styling */
+object {
+    width: 100%;
+    min-height: 300px; /* Adjust height as needed */
+    border: none;
+    margin-top: 20px;
+}
+
+/* Form and button styling */
+form {
+    text-align: center;
+}
+
+button {
+    background-color: #5cb85c; /* Green */
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #4cae4c; /* Darker green shade */
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+    
+    object {
+        min-height: 200px;
+    }
+}

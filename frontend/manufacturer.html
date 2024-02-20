@@ -7,15 +7,16 @@
     <title>Document</title>
 </head>
 <body>
-    This is manufacturer Page
-
     <div>
-        <div>Name: {{.Name}}</div>
-        <div>Country: {{.Country}}</div>
-        <div>Founding Year: {{.FoundingYear}}</div>
+        <div><strong>Name: </strong>{{.Name}}</div>
+        <div><strong>Country: </strong>{{.Country}}</div>
+        <div><strong>Founding Year: </strong>{{.FoundingYear}}</div>
+        <div> 
+            <object type="text/html" data="{{ .Info }}">
+            </object>
+         </div>
+        
     </div>
-
-
 
     <form action="/" method="post">
         <button type="submit">To front page</button>
