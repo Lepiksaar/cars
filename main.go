@@ -87,6 +87,7 @@ func ManufactPage(w http.ResponseWriter, r *http.Request) {
 // Comparison page handler
 func Comparepage(w http.ResponseWriter, r *http.Request) {
 	temp = template.Must(template.ParseFiles("frontend/comparepage.html"))
+	// we can run delete button like this because when tehere is no value lenght of for loop is 0
 	name := r.FormValue("carName")
 	for i, v := range CompList {
 		if v.Name == name {
@@ -175,6 +176,16 @@ func Compare(w http.ResponseWriter, r *http.Request) {
 			Drivetrain:   r.FormValue("carDrivetrain"),
 		},
 	}
+	if !isCompUnique(comp, CompList) {
+		log.Println("The car is already in the comparison list.")
+		searchbar := searchbars.FindSearch()
+		data := map[string]interface{}{
+			"search": searchbar,
+			"car":    Car2,
+		}
+		temp.Execute(w, data)
+		return
+	}
 	CompList = append(CompList, comp)
 	searchbar := searchbars.FindSearch()
 	data := map[string]interface{}{
@@ -182,4 +193,14 @@ func Compare(w http.ResponseWriter, r *http.Request) {
 		"car":    Car2,
 	}
 	temp.Execute(w, data)
+}
+
+// isCompUnique checks if a given 'comp' is unique in the 'CompList'
+func isCompUnique(newComp structs.Models, compList []structs.Models) bool {
+	for _, comp := range compList {
+		if comp.Name == newComp.Name && comp.Year == newComp.Year {
+			return false
+		}
+	}
+	return true
 }
