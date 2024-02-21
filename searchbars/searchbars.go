@@ -39,6 +39,7 @@ func ModelsElement() []structs.Models {
 	return item
 }
 
+// this function removes double values for searchbar.
 func FindSearch() structs.SbarVal {
 	uniqueCount := make(map[string]struct{})
 	s := structs.SbarVal{}

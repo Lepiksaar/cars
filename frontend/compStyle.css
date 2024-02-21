@@ -32,13 +32,13 @@ body {
 }
 
 .specs {
-    min-width: 200px;
+    min-width: 400px;
     border-left: 1px solid #ddd;
     display: flex;
     flex-direction: column;
     padding: 10px;
     text-align: center;
-    background-color: #fff5e6; /* Light orange background */
+    background-color: #fff5e6; 
 }
 
 .specs > div {
@@ -52,14 +52,14 @@ body {
 }
 
 .specs img {
-    max-width: 400px; /* Full width of the container */
+    width: 400px; /* Full width of the container */
     height: auto; /* Maintain aspect ratio */
     border-radius: 5px;
+    overflow: scroll;
 }
 
 .return-form {
     padding: 20px;
-    background-color: #f7f7f7; /* Same as body background for consistency */
     text-align: center;
 }
 

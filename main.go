@@ -3,6 +3,7 @@ package main
 import (
 	"cars/searchbars"
 	"cars/structs"
+
 	"context"
 	"html/template"
 	"log"
@@ -14,30 +15,30 @@ import (
 	"time"
 )
 
+// Defining global variables for templates and model lists
 var temp *template.Template
 var Car2 = []structs.Models{}
 var Search = structs.SbarVal2{}
 var CompList = []structs.Models{}
 
 func main() {
-
 	address := ":8081"
 
-	// declaring multiplex for server
+	// Initialize the HTTP server multiplexer
 	mux := http.NewServeMux()
-	// making one static folder for staic files example: css
-	fileHandler := http.StripPrefix("/frontend/", http.FileServer(http.Dir("frontend")))
-	mux.Handle("/frontend/", fileHandler)
-	// declaring all folders under api as static to load the picture
-	fileHandler = http.StripPrefix("/api/", http.FileServer(http.Dir("api")))
-	mux.Handle("/api/", fileHandler)
-	// declaring car2 here because i can change this struct later.
+
+	//  Serve static files for the frontend and API to recieve pictures and
+	mux.Handle("/frontend/", http.StripPrefix("/frontend/", http.FileServer(http.Dir("frontend"))))
+	mux.Handle("/api/", http.StripPrefix("/api/", http.FileServer(http.Dir("api"))))
+
+	// Fetch initial car models data
 	Car2 = searchbars.ModelsElement()
 
 	log.Printf("Starting server on %s", address)
 
+	// Register route handlers
 	mux.HandleFunc("/", HandleFunc)
-	mux.HandleFunc("/action", Action)
+	mux.HandleFunc("/sbar", Sbar)
 	mux.HandleFunc("/compare", Compare)
 	mux.HandleFunc("/comparepage", Comparepage)
 	mux.HandleFunc("/manufacturer", ManufactPage)
@@ -52,15 +53,15 @@ func main() {
 	}
 
 	// running the server async in another channel
-	sigCh := make(chan os.Signal, 1)
-	signal.Notify(sigCh, os.Interrupt, syscall.SIGTERM)
-
 	go func() {
 		if err := theServer.ListenAndServe(); err != http.ErrServerClosed {
 			log.Fatalf("ListenAndServe error: %v", err)
 		}
 	}()
 
+	//the shutdown logic for inside error
+	sigCh := make(chan os.Signal, 1)
+	signal.Notify(sigCh, os.Interrupt, syscall.SIGTERM)
 	<-sigCh
 	log.Println("\nReceived interrupt signal. Server shutting down...")
 
@@ -74,20 +75,22 @@ func main() {
 	log.Println("Server has stopped please visit: https://www.youtube.com/watch?v=dQw4w9WgXcQ for more info")
 
 }
+
+// Manufacturers page handler
 func ManufactPage(w http.ResponseWriter, r *http.Request) {
 	temp = template.Must(template.ParseFiles("frontend/manufacturer.html"))
-
 	manId := r.FormValue("manufacturerId")
 	manufacturer := searchbars.FilterManufacturer(manId)
-
 	temp.Execute(w, manufacturer)
 }
+
+// Comparison page handler
 func Comparepage(w http.ResponseWriter, r *http.Request) {
 	temp = template.Must(template.ParseFiles("frontend/comparepage.html"))
-
 	temp.Execute(w, CompList)
 }
 
+// Frontpage handler
 func HandleFunc(w http.ResponseWriter, r *http.Request) {
 	// Only parse the template once
 	temp = template.Must(template.ParseFiles("frontend/index.html"))
@@ -100,34 +103,20 @@ func HandleFunc(w http.ResponseWriter, r *http.Request) {
 	temp.Execute(w, manu)
 }
 
-func Action(w http.ResponseWriter, r *http.Request) { // here we both recieve data from server and send updated list back.
+// searchbar handler
+func Sbar(w http.ResponseWriter, r *http.Request) {
 	log.Println("POST loading search Data...")
-	var cyearInt int
-	var hpInt int
-	var err error
+	cyearInt, err := parseFormValueInt(r.FormValue("cyear"))
+	if err != nil {
+		http.Error(w, "Invalid cyear parameter", http.StatusBadRequest)
+		return
+	}
+	hpInt, err := parseFormValueInt(r.FormValue("horsepower"))
+	if err != nil {
+		http.Error(w, "Invalid Hp parameter", http.StatusBadRequest)
+		return
+	}
 
-	// FormValue gives us a "string" so we need to convert it into a int
-	yearStr := r.FormValue("cyear")
-	if yearStr == "" {
-		cyearInt = 0
-	} else {
-		cyearInt, err = strconv.Atoi(yearStr)
-		if err != nil {
-			http.Error(w, "Invalid cyear parameter", http.StatusBadRequest)
-			return
-		}
-	}
-	hpStr := r.FormValue("horsepower")
-	if hpStr == "" {
-		hpInt = 0
-	} else {
-		hpInt, err = strconv.Atoi(hpStr)
-		if err != nil {
-			http.Error(w, "Invalid Hp parameter", http.StatusBadRequest)
-			return
-		}
-	}
-	// we load te values we recieved from the sidenavbar
 	Search = structs.SbarVal2{
 		ManuN:   r.FormValue("manufacturer"),
 		ManuC:   r.FormValue("country"),
@@ -141,42 +130,34 @@ func Action(w http.ResponseWriter, r *http.Request) { // here we both recieve da
 	}
 	Car2 := searchbars.FilterSearch(Search, Car2)
 	searchbar := searchbars.FindSearch()
-
-	manu := map[string]interface{}{
+	data := map[string]interface{}{
 		"search": searchbar,
 		"car":    Car2,
 	}
-	temp.Execute(w, manu)
-
+	temp.Execute(w, data)
 }
 
-func Compare(w http.ResponseWriter, r *http.Request) {
-	var cyearInt int
-	var hpInt int
-	var err error
+// Helper function to parse form values into integers because r.FromValue returns strings
+func parseFormValueInt(value string) (int, error) {
+	if value == "" {
+		return 0, nil
+	}
+	return strconv.Atoi(value)
+}
 
-	// FormValue gives us a "string" so we need to convert it into a int
-	yearStr := r.FormValue("carYear")
-	if yearStr == "" {
-		cyearInt = 0
-	} else {
-		cyearInt, err = strconv.Atoi(yearStr)
-		if err != nil {
-			http.Error(w, "Invalid cyear parameter", http.StatusBadRequest)
-			return
-		}
+// Compare handler for adding cars to the comparison list
+func Compare(w http.ResponseWriter, r *http.Request) {
+	cyearInt, err := parseFormValueInt(r.FormValue("carYear"))
+	if err != nil {
+		http.Error(w, "Invalid cyear parameter", http.StatusBadRequest)
+		return
 	}
-	hpStr := r.FormValue("carHp")
-	if hpStr == "" {
-		hpInt = 0
-	} else {
-		hpInt, err = strconv.Atoi(hpStr)
-		if err != nil {
-			http.Error(w, "Invalid Hp parameter", http.StatusBadRequest)
-			return
-		}
+	hpInt, err := parseFormValueInt(r.FormValue("carHp"))
+	if err != nil {
+		http.Error(w, "Invalid Hp parameter", http.StatusBadRequest)
+		return
 	}
-	// we load te values we recieved from the compare buttons
+
 	comp := structs.Models{
 		Name:  r.FormValue("carName"),
 		Year:  cyearInt,
@@ -189,12 +170,10 @@ func Compare(w http.ResponseWriter, r *http.Request) {
 		},
 	}
 	CompList = append(CompList, comp)
-
 	searchbar := searchbars.FindSearch()
-
-	manu := map[string]interface{}{
+	data := map[string]interface{}{
 		"search": searchbar,
 		"car":    Car2,
 	}
-	temp.Execute(w, manu)
+	temp.Execute(w, data)
 }
