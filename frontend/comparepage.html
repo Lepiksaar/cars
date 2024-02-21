@@ -28,6 +28,10 @@
                 <div>{{ .Specifications.Transmission }}</div>
                 <div>{{ .Specifications.Drivetrain }}</div>
                 <div><img src="{{ .Image }}" alt="Car picture"></div>
+                <form action="/comparepage" method="post" class="return-form">
+                    <input type="hidden" name="carName" value="{{.Name}}">
+                    <button type="submit">delete</button>
+                </form>
             </div>
             {{ end }}
         </div>

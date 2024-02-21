@@ -87,6 +87,12 @@ func ManufactPage(w http.ResponseWriter, r *http.Request) {
 // Comparison page handler
 func Comparepage(w http.ResponseWriter, r *http.Request) {
 	temp = template.Must(template.ParseFiles("frontend/comparepage.html"))
+	name := r.FormValue("carName")
+	for i, v := range CompList {
+		if v.Name == name {
+			CompList = append(CompList[:i], CompList[i+1:]...)
+		}
+	}
 	temp.Execute(w, CompList)
 }
 
